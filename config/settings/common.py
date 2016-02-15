@@ -44,7 +44,7 @@ THIRD_PARTY_APPS = (
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'py_plots.users',  # custom users app
-    # Your stuff: custom apps go here
+    'py_plots.charts',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -98,11 +98,11 @@ MANAGERS = ADMINS
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db("DATABASE_URL", default="postgres:///py_plots"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ROOT_DIR('db.sqlite3'),
+    }
 }
-DATABASES['default']['ATOMIC_REQUESTS'] = True
-
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ AUTHENTICATION_BACKENDS = (
 # Some really nice defaults
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_ADAPTER = 'py_plots.users.adapter.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'py_plots.users.adapter.SocialAccountAdapter'
 ACCOUNT_ALLOW_REGISTRATION = True

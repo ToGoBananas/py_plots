@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Test{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container" style="border: 2px solid black">
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table">
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th>#</th>
+                      <th>Script name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for script in scripts %}
+                        <tr {% if script == active_script %}class="active_script"{% endif %}>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td><a href="{% url 'test' script.pk %}">{{ script }}</a></td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-md-8">
+                <div class="row" style="border: 2px solid black; padding: 5px">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-8">
+                                {% for parameter in active_script.parameters.all %}
+                                    <div>
+                                        <label for="select{{ forloop.counter }}">{{ parameter }}</label>
+                                        <select id="select{{ forloop.counter }}">
+                                            {% for choice in parameter.choices.all %}
+                                                <option value="{{ forloop.counter }}">{{ choice }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                {% for option in active_script.options.all %}
+                                    <div>
+                                        <label>
+                                            <input type="checkbox" value="{{ forloop.counter }}">
+                                            {{ option }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-warning" id="execute">Execute</button>
+                    </div>
+                </div>
+
+                <br><br>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <textarea id="code" style="min-height: 450px; width: 100%">{{ active_script.code }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="plots"></div>
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {% crispy scripts %}#}
+{#    </form>#}
+{% endblock content %}

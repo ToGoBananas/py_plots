@@ -79,12 +79,13 @@
               <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
           {% endfor %}
       {% endif %}
-
+    </div> <!-- /container -->
+        <br>
       {% block content %}
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
 
-    </div> <!-- /container -->
+
 
     {% block modal %}{% endblock modal %}
 
@@ -103,9 +104,10 @@
 
       <!-- Your stuff: Third-party javascript libraries go here -->
 
+        <script src="{% static 'js/js.cookie.js' %}"></script>
       <!-- place project specific Javascript in this file -->
       <script src="{% static 'js/project.js' %}"></script>
     {% endblock javascript %}
   </body>
 </html>
- 
+
