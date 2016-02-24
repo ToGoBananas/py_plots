@@ -33,8 +33,11 @@ class ScriptView(LoginRequiredMixin, TemplateView):
 class ExecuteView(LoginRequiredMixin, View):
 
     def post(self, request, script_pk):
-        exec(request.POST['code'])
-        print(plt.get_fignums())
+        code = request.POST['code']
+        for x in request.POST:
+            if x != 'code':
+                code.replace(x, request.POST[x])
+        exec(code)
         plot = PlotFunction.objects.get(pk=script_pk)
         if plot.get_images():
             plot.get_images().delete()

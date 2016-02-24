@@ -26,6 +26,8 @@
                   </tbody>
                 </table>
             </div>
+        <form method="post" id="default_form">
+
             <div class="col-md-8">
                 <div class="row" style="border: 2px solid black; padding: 5px">
                     <div class="col-md-9">
@@ -34,9 +36,9 @@
                                 {% for parameter in active_script.parameters.all %}
                                     <div>
                                         <label for="select{{ forloop.counter }}">{{ parameter }}</label>
-                                        <select id="select{{ forloop.counter }}">
+                                        <select id="select{{ forloop.counter }}" name="{{ parameter }}">
                                             {% for choice in parameter.choices.all %}
-                                                <option value="{{ forloop.counter }}">{{ choice }}</option>
+                                                <option value="{{ choice }}">{{ choice }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -63,10 +65,11 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <textarea id="code" style="min-height: 450px; width: 100%">{{ active_script.code }}</textarea>
+                        <textarea id="code" name='code' style="min-height: 450px; width: 100%">{{ active_script.code }}</textarea>
                     </div>
                 </div>
             </div>
+        </form>
         </div>
     </div>
     <div class="container-fluid" id="plots"></div>

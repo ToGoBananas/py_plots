@@ -30,7 +30,7 @@ class Option(models.Model):
 
 
 class Parameter(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     choices = models.ManyToManyField('ParameterChoice')
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Parameter(models.Model):
 
 
 class ParameterChoice(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name

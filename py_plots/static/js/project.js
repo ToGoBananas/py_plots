@@ -13,10 +13,11 @@ $.ajaxSetup({
 
 
 $('#execute').click(function () {
+    var form = $('#default_form');
     $.ajax({
         method: 'POST',
         url: 'execute/',
-        data: {code : $('#code').val()}
+        data: form.serialize()
     }).done(function(html) {
         $('#plots').replaceWith(html);
     })
