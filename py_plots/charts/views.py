@@ -36,7 +36,7 @@ class ExecuteView(LoginRequiredMixin, View):
         code = request.POST['code']
         for x in request.POST:
             if x != 'code':
-                code.replace(x, request.POST[x])
+                code = code.replace(x, request.POST[x])
         exec(code)
         plot = PlotFunction.objects.get(pk=script_pk)
         if plot.get_images():
