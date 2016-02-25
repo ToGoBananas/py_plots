@@ -19,6 +19,7 @@ $('#execute').click(function () {
         url: 'execute/',
         data: form.serialize()
     }).done(function(html) {
-        $('#plots').replaceWith(html);
+        $('#plots').empty();
+        $('#plots').append(html)
     })
 });

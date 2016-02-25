@@ -18,7 +18,7 @@ class PlotFunction(models.Model):
         return self.name
 
     def get_images(self):
-        return self.plotimage_set.all()
+        return PlotImage.objects.filter(plot=self)
 
 
 class Option(models.Model):

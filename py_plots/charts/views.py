@@ -33,22 +33,26 @@ class ScriptView(LoginRequiredMixin, TemplateView):
 class ExecuteView(LoginRequiredMixin, View):
 
     def post(self, request, script_pk):
+        print(request.POST)
         code = request.POST['code']
         for x in request.POST:
             if x != 'code':
                 code = code.replace(x, request.POST[x])
         exec(code)
+        print(2)
         plot = PlotFunction.objects.get(pk=script_pk)
         if plot.get_images():
             plot.get_images().delete()
+        print(3)
+        print(4)
         for i in plt.get_fignums():
             buf = io.BytesIO()
             plt.figure(i)
             plt.savefig(buf, format='png')
             plot_image = PlotImage.objects.create(plot=plot)
             plot_image.image.save(str(i)+plot.name+'.png', File(buf))
-        else:
             buf.close()
+        print(plot)
         for i in plt.get_fignums():
             plt.close(plt.figure(i))
         return render_to_response('charts/script_images.html', {'plot': plot})
