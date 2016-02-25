@@ -17,6 +17,7 @@ from django.core.files import File
 import json
 from PIL import Image
 import io
+import random
 
 
 class ScriptView(LoginRequiredMixin, TemplateView):
@@ -46,7 +47,7 @@ class ExecuteView(LoginRequiredMixin, View):
             plt.figure(i)
             plt.savefig(buf, format='png')
             plot_image = PlotImage.objects.create(plot=plot)
-            plot_image.image.save(str(i)+plot.name+'.png', File(buf))
+            plot_image.image.save(str(i)+plot.name+str(random.randrange(100))+'.png', File(buf))
             buf.close()
         for i in plt.get_fignums():
             plt.close(plt.figure(i))
