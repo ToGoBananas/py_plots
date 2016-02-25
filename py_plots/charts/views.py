@@ -35,11 +35,14 @@ class ExecuteView(LoginRequiredMixin, View):
 
     def post(self, request, script_pk):
         code = request.POST['code']
+        plot = PlotFunction.objects.get(pk=script_pk)
+        plot.code = code
+        plot.save()
         for x in request.POST:
             if x != 'code':
                 code = code.replace(x, request.POST[x])
         exec(code)
-        plot = PlotFunction.objects.get(pk=script_pk)
+        
         if plot.get_images():
             plot.get_images().delete()
         for i in plt.get_fignums():
